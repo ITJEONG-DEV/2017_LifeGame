@@ -1,8 +1,10 @@
 local M = {}
 local widget = require "widget"
+local json = require "json"
+local sqlite3 = require "sqlite3"
 local _W, _H = display.contentWidth, display.contentHeight
 
-local path = system.pathForFile( "userData.txt", system.DocumentsDirectory )
+local path = system.pathForFile( "data.db", system.ApplicationSupportDirectory )
 
 local statusBar, statusBar_content
 local pop, pop_bg, pop_button, pop_content, pop_type -- 1 : myInfo / 2 : bag
@@ -234,17 +236,26 @@ function createUI()
 
 	-- luck
 	statusBar_content[7] = display.newText( userData.luck, _W*0.763, _H*0.0685, native.newFont( "NanumSquareB.ttf" ), 23 )
-
 end
 
 function M.loadData()
-	local file, errorString = io.open( path "r" )
+	local db = sqlite3.open( path )
+	local userInfo = [[CREATE TABLE IF NOT EXISTS userInfo ( name String PRIMARY KEY, money, hp, maxHP, weight, attack, int, beauty, luck );]]
+	local itemInfo = [[CREATE TABLE IF NOT EXISTS itemInfo ( name String PRIMARY KEY, mirror, book, drink, ramen, drink, snack, steak, type, state]]
+	db:exec( tableSetup )
 
+	local text = [[INSERT INTO userInfo VALUES (, ']]..user.money..[[', ']]..user.hp..[[', ']]..user.maxHP..[[', ']]..user.weight..[[', ']]..user.attack..[[', ']]..user.int..[[', ']]..user.beauty..[[', ']]..user.luck..[['); ]]
+end
+
+function loadData()
+	local file, errorString = io.open( path, "r" )
 	if not file then
+		print("load error : "..errorString)
 	else
 		local decoded, pos, msg = json.decodeFile( path )
 
 		if not decoded then
+			print("save progress")
 		else
 			userData.money = decoded.money
 			userData.hp = decoded.hp
@@ -265,12 +276,13 @@ function M.loadData()
 	end
 end
 
-function M.saveData()
-	local encoded = json.encode( userData )
-
+function saveData()
 	local file, errorString = io.open( path, "w" )
 
+	local encoded = json.encode( userData )
+
 	if not file then
+		print("error : "..errorString)
 	else
 		file:write( encoded )
 
