@@ -7,7 +7,7 @@ local _W, _H = display.contentWidth, display.contentHeight
 local path = system.pathForFile( "data.db", system.ApplicationSupportDirectory )
 
 local statusBar, statusBar_content
-local pop, pop_bg, pop_button, pop_content, pop_type -- 1 : myInfo / 2 : bag
+local pop, pop_bg, pop_button, pop_content -- 1 : myInfo / 2 : bag
 local button_bag, button_myInfo
 
 -- money hp maxHP weight attack int beauty luck
@@ -22,19 +22,28 @@ local userData =
 	["int"] = 0,
 	["beauty"] = 0,
 	["luck"] = 0,
-	["mirror"] = 0,
-	["book"] = 0,
-	["drink"] = 0,
-	["ramen"] = 0,
-	["drink"] = 0,
-	["snack"] = 0,
-	["steak"] = 0,
+	["mirror"] = 5,
+	["book"] = 2,
+	["drink"] = 3,
+	["ramen"] = 2,
+	["drink"] = 2,
+	["snack"] = 2,
+	["steak"] = 1,
 	["type"] = 1,
 	["name"] = "길동이",
 	["state"] = 1
 }
 
-function showPop()
+function M.getData(names)
+	if userData[names] then return userData[names] end
+end
+
+function M.setData(names, n)
+	if userData[names] and type(n) == 'number' then userData[names] = n end
+	print( userData[names])
+end
+
+function showPop2(pop_type)
 	local basicTop = _H*0.3875
 	-- set button false
 	button_bag:setEnabled( false )
@@ -52,7 +61,7 @@ function showPop()
 		width = 43,
 		height = 43,
 		top = _H*0.3,
-		left = pop.x + pop.contentWidth*0.5 - 45,
+		left = pop.x + pop.contentWidth*0.5 - 44,
 		top = pop.y - pop.contentHeight*0.5 + 2,
 		defaultFile = "image/popup_button.png",
 		overFile = "image/popup_button.png",
@@ -63,6 +72,7 @@ function showPop()
 	pop_content = {}
 
 	if pop_type == 1 then --myInfo
+		print("myInfo")
 		pop_content[1] = display.newText( "내 정보", _W*0.5, _H*0.25, native.newFont( "NanumSquareB.ttf" ), 30 )
 		pop_content[1]:setFillColor( 0 )
 
@@ -80,43 +90,42 @@ function showPop()
 
 
 		-- hp/maxHP
-		pop_content[2] = display.newText( "현재 체력", _W*0.275, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[2]:setFillColor( 0 )
-		pop_content[3] = display.newText( userData.hp.."/"..userData.maxHP, _W*0.4, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[3]:setFillColor( 0 )
+		pop_content[6] = display.newText( "현재 체력", _W*0.275, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[6]:setFillColor( 0 )
+		pop_content[7] = display.newText( userData.hp.."/"..userData.maxHP, _W*0.4, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[7]:setFillColor( 0 )
 
 		-- weight
-		pop_content[4] = display.newText( "현재 체중", _W*0.6, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[4]:setFillColor( 0 )
-		pop_content[5] = display.newText( userData.weight, _W*0.7, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[5]:setFillColor( 0 )
+		pop_content[8] = display.newText( "현재 체중", _W*0.6, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[8]:setFillColor( 0 )
+		pop_content[9] = display.newText( userData.weight, _W*0.7, basicTop+_H*0.1, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[9]:setFillColor( 0 )
 
 
 		-- attack
-		pop_content[2] = display.newText( "현재 공격력", _W*0.275, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[2]:setFillColor( 0 )
-		pop_content[3] = display.newText( userData.attack, _W*0.4, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[3]:setFillColor( 0 )
+		pop_content[10] = display.newText( "현재 공격력", _W*0.275, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[10]:setFillColor( 0 )
+		pop_content[11] = display.newText( userData.attack, _W*0.4, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[11]:setFillColor( 0 )
 
 		-- int
-		pop_content[4] = display.newText( "현재 지능", _W*0.6, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[4]:setFillColor( 0 )
-		pop_content[5] = display.newText( userData.int, _W*0.7, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[5]:setFillColor( 0 )
+		pop_content[12] = display.newText( "현재 지능", _W*0.6, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[12]:setFillColor( 0 )
+		pop_content[13] = display.newText( userData.int, _W*0.7, basicTop+_H*0.2, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[13]:setFillColor( 0 )
 
 
 		-- beauty
-		pop_content[2] = display.newText( "현재 매력", _W*0.275, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[2]:setFillColor( 0 )
-		pop_content[3] = display.newText( userData.beauty, _W*0.4, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[3]:setFillColor( 0 )
+		pop_content[14] = display.newText( "현재 매력", _W*0.275, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[14]:setFillColor( 0 )
+		pop_content[15] = display.newText( userData.beauty, _W*0.4, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[15]:setFillColor( 0 )
 
 		-- luck
-		pop_content[4] = display.newText( "현재 운", _W*0.6, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[4]:setFillColor( 0 )
-		pop_content[5] = display.newText( userData.luck, _W*0.7, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
-		pop_content[5]:setFillColor( 0 )
-
+		pop_content[16] = display.newText( "현재 운", _W*0.6, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[16]:setFillColor( 0 )
+		pop_content[17] = display.newText( userData.luck, _W*0.7, basicTop+_H*0.3, native.newFont("NanumSquareB.ttf"), 25 )
+		pop_content[17]:setFillColor( 0 )
 	elseif pop_type == 2 then --myBag
 		-- beef
 		pop_content[1] = display.newImageRect( userData.steak == 0 and "image/button_beef.png" or "image/button_beef_c.png" , 100, 100 )
@@ -160,7 +169,6 @@ function showPop()
 		pop_content[12] = display.newText( userData.book.."개", pop_content[11].x, pop_content[11].y + 90, native.newFont( "NanumSquareB.ttf" ), 25 )
 		pop_content[12]:setFillColor( 0 )
 
-
 	end
 end
 
@@ -197,7 +205,7 @@ function createUI()
 	    top = _H*0.005,
 	    defaultFile = "image/button_myinf.png",
 	    overFile = "image/button_myinfo.png",
-	    onRelease = function() pop_type = 1 showPop() end
+	    onRelease = function() print("1") showPop2(1) end
 	})
 	button_myInfo:scale(0.8, 0.8)
 
@@ -210,7 +218,7 @@ function createUI()
 	    top = _H*0.005,
 	    defaultFile = "image/button_bag.png",
 	    overFile = "image/button_bago.png",
-	    onRelease = function() pop_type = 2 showPop() end
+	    onRelease = function() print("2") showPop2(2) end
 	})
 	button_bag:scale(0.8, 0.8)
 
@@ -218,7 +226,7 @@ function createUI()
 
 	-- money
 	statusBar_content[1] = display.newText( userData.money, _W*0.125, _H*0.065, native.newFont( "NanumSquareB.ttf" ), 23 )
-	
+
 	-- hp
 	statusBar_content[2] = display.newText( userData.hp, _W*0.293, _H*0.0685, native.newFont( "NanumSquareB.ttf" ), 23 )
 
@@ -239,15 +247,6 @@ function createUI()
 end
 
 function M.loadData()
-	local db = sqlite3.open( path )
-	local userInfo = [[CREATE TABLE IF NOT EXISTS userInfo ( name String PRIMARY KEY, money, hp, maxHP, weight, attack, int, beauty, luck );]]
-	local itemInfo = [[CREATE TABLE IF NOT EXISTS itemInfo ( name String PRIMARY KEY, mirror, book, drink, ramen, drink, snack, steak, type, state]]
-	db:exec( tableSetup )
-
-	local text = [[INSERT INTO userInfo VALUES (, ']]..user.money..[[', ']]..user.hp..[[', ']]..user.maxHP..[[', ']]..user.weight..[[', ']]..user.attack..[[', ']]..user.int..[[', ']]..user.beauty..[[', ']]..user.luck..[['); ]]
-end
-
-function loadData()
 	local file, errorString = io.open( path, "r" )
 	if not file then
 		print("load error : "..errorString)
@@ -276,7 +275,7 @@ function loadData()
 	end
 end
 
-function saveData()
+function M.saveData()
 	local file, errorString = io.open( path, "w" )
 
 	local encoded = json.encode( userData )
@@ -294,8 +293,18 @@ function saveData()
 end
 
 function M.init()
+	-- create pop-up
 	createUI()
 end
 
+function M.refresh()
+	statusBar_content[1].text = userData.money
+	statusBar_content[2].text = userData.hp
+	statusBar_content[3].text = userData.weight
+	statusBar_content[4].text = userData.attack
+	statusBar_content[5].text = userData.int
+	statusBar_content[6].text = userData.beauty
+	statusBar_content[7].text = userData.luck
+end
 
 return M
