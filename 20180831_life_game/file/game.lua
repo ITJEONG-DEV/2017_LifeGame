@@ -88,7 +88,6 @@ function removeContent()
 end
 
 function showPop(popNum)
-
 	-- set button false
 	for i = 1, table.maxn(bg_content), 1 do
 		if bg_content[i].id == 'widget_button' then
@@ -124,7 +123,6 @@ function showPop(popNum)
 		-- set button false
 		button_bag:setEnabled( false )
 		button_myInfo:setEnabled( false )
-
 
 		if popNum == -1 then --myInfo
 			pop_content[1] = display.newText( "내 정보", _W*0.5, _H*0.35, native.newFont( "NanumSquareB.ttf" ), 30 )
@@ -223,6 +221,7 @@ function showPop(popNum)
 			pop_content[12] = display.newText( userData.getData("book").."개", pop_content[11].x, pop_content[11].y + 90, native.newFont( "NanumSquareB.ttf" ), 25 )
 			pop_content[12]:setFillColor( 0 )
 		end
+	elseif popNum == 0 then
 	elseif popNum == 1 then -- sink
 		-- steak
 		pop_content[1] = display.newImage( userData.getData("steak") == 0 and "image/button_beef.png" or "image/button_beef_c.png" )
@@ -351,7 +350,7 @@ function showPop(popNum)
 			overFile = "image/button_booko.png",
 			onRelease = function()
 				local n = pop_content[1]:getProgress( )
-				pop_content[1]:setProgress( n + 0.04 )	
+				pop_content[1]:setProgress( n + 0.04 )
 
 				if pop_content[1]:getProgress( ) == 1 then
 					userData.setData("int", userData.getData("int") + 1 )
@@ -387,7 +386,7 @@ function showPop(popNum)
 			overFile = "image/button_runo.png",
 			onRelease = function()
 				local n = pop_content[1]:getProgress( )
-				pop_content[1]:setProgress( n + 0.04 )	
+				pop_content[1]:setProgress( n + 0.04 )
 
 				if pop_content[1]:getProgress( ) == 1 then
 					userData.setData("maxHP", userData.getData("maxHP") + 1 )
@@ -425,7 +424,7 @@ function showPop(popNum)
 			overFile = "image/button_beno.png",
 			onRelease = function()
 				local n = pop_content[1]:getProgress( )
-				pop_content[1]:setProgress( n + 0.04 )	
+				pop_content[1]:setProgress( n + 0.04 )
 
 				if pop_content[1]:getProgress( ) == 1 then
 					userData.setData( "maxHP", userData.getData("maxHP") + 0.5 )
@@ -463,7 +462,7 @@ function showPop(popNum)
 			overFile = "image/button_sando.png",
 			onRelease = function()
 				local n = pop_content[1]:getProgress( )
-				pop_content[1]:setProgress( n + 0.04 )	
+				pop_content[1]:setProgress( n + 0.04 )
 
 				if pop_content[1]:getProgress( ) == 1 then
 					userData.setData( "maxHP", userData.getData("maxHP") + 0.5 )
@@ -559,9 +558,7 @@ function createActivity(place)
 				overFile = "image/icon_mart.png",
 				onRelease = function() removeContent() createActivity(13) end
 			})
-
 		elseif place == 2 then
-
 		end
 
 		bg_content[ table.maxn(bg_content) + 1 ] = widget.newButton(
@@ -573,6 +570,7 @@ function createActivity(place)
 			defaultFile = "image/icon_bus.png",
 			overFile = "image/icon_bus.png",
 			onRelease = function()
+				showPop(0)
 			end
 		})
 	elseif place == 10 then -- house
@@ -645,7 +643,7 @@ function createActivity(place)
 			y = _H*0.5,
 			defaultFile = "image/button_laptop.png",
 			overFile = "image/button_laptop.png",
-			onRelease = function() showPop(3) end 
+			onRelease = function() showPop(3) end
 		})
 
 		bg_content[3] = widget.newButton(
@@ -742,7 +740,13 @@ function createActivity(place)
 			end
 		})
 
-		bg_content[3] = widget.newButton(
+		bg_content[2] = display.newText( "한우", bg_content[1].x - _W*0.02, bg_content[1].y + _H*0.22, native.newFont("NanumSquareB.ttf"), 30, "center" )
+		bg_content[2]:setFillColor(0)
+
+		bg_content[3] = display.newText( "5000원", bg_content[1].x - _W*0.02, bg_content[1].y + _H*0.27, native.newFont("NanumSquareB.ttf"), 25, "center" )
+		bg_content[3]:setFillColor(0)
+
+		bg_content[4] = widget.newButton(
 		{
 			width = 110,
 			height = 129,
@@ -761,11 +765,17 @@ function createActivity(place)
 			end
 		})
 
-		bg_content[5] = widget.newButton(
+		bg_content[5] = display.newText( "라면", bg_content[4].x - _W*0.01, bg_content[4].y + _H*0.22, native.newFont("NanumSquareB.ttf"), 30, "center" )
+		bg_content[5]:setFillColor(0)
+
+		bg_content[6] = display.newText( "4000원", bg_content[4].x - _W*0.01, bg_content[4].y + _H*0.27, native.newFont("NanumSquareB.ttf"), 25, "center" )
+		bg_content[6]:setFillColor(0)
+
+		bg_content[7] = widget.newButton(
 		{
 			width = 66,
 			height = 130,
-			x = bg_content[3].x + _W*0.125,
+			x = bg_content[4].x + _W*0.125,
 			y = _H*0.4,
 			defaultFile = "image/button_drink_c.png",
 			overFile = "image/button_drink_c_s.png",
@@ -780,11 +790,18 @@ function createActivity(place)
 			end
 		})
 
-		bg_content[7] = widget.newButton(
+		bg_content[8] = display.newText( "음료수", bg_content[7].x, bg_content[7].y + _H*0.22, native.newFont("NanumSquareB.ttf"), 30, "center" )
+		bg_content[8]:setFillColor(0)
+
+		bg_content[9] = display.newText( "1500원", bg_content[7].x, bg_content[7].y + _H*0.27, native.newFont("NanumSquareB.ttf"), 25, "center" )
+		bg_content[9]:setFillColor(0)
+
+
+		bg_content[10] = widget.newButton(
 		{
 			width = 121.5,
 			height = 130.5,
-			x = bg_content[5].x + _W*0.13,
+			x = bg_content[7].x + _W*0.13,
 			y = _H*0.4,
 			defaultFile = "image/button_snack_c.png",
 			overFile = "image/button_snack_c_s.png",
@@ -799,11 +816,17 @@ function createActivity(place)
 			end
 		})
 
-		bg_content[9] = widget.newButton(
+		bg_content[11] = display.newText( "과자", bg_content[10].x + _W*0.005, bg_content[10].y + _H*0.22, native.newFont("NanumSquareB.ttf"), 30, "center" )
+		bg_content[11]:setFillColor(0)
+
+		bg_content[12] = display.newText( "2500원", bg_content[10].x + _W*0.005, bg_content[10].y + _H*0.27, native.newFont("NanumSquareB.ttf"), 25, "center" )
+		bg_content[12]:setFillColor(0)
+
+		bg_content[13] = widget.newButton(
 		{
 			width = 80,
 			height = 134,
-			x = bg_content[7].x + _W*0.133,
+			x = bg_content[10].x + _W*0.133,
 			y = _H*0.4,
 			defaultFile = "image/button_mirror_c.png",
 			overFile = "image/button_mirror_c_s.png",
@@ -819,11 +842,18 @@ function createActivity(place)
 			end
 		})
 
-		bg_content[11] = widget.newButton(
+		bg_content[14] = display.newText( "거울", bg_content[13].x + _W*0.01, bg_content[13].y + _H*0.22, native.newFont("NanumSquareB.ttf"), 30, "center" )
+		bg_content[14]:setFillColor(0)
+
+		bg_content[15] = display.newText( "50000원", bg_content[13].x + _W*0.01, bg_content[13].y + _H*0.27, native.newFont("NanumSquareB.ttf"), 25, "center" )
+		bg_content[15]:setFillColor(0)
+
+
+		bg_content[16] = widget.newButton(
 		{
 			width = 99.6,
 			height = 108,
-			x = bg_content[9].x + _W*0.133,
+			x = bg_content[13].x + _W*0.133,
 			y = _H*0.4,
 			defaultFile = "image/button_book_c.png",
 			overFile = "image/button_book_c_s.png",
@@ -837,6 +867,24 @@ function createActivity(place)
 					am.alertMessage("돈이 부족합니다.")
 				end
 			end
+		})
+
+		bg_content[17] = display.newText( "책", bg_content[16].x + _W*0.01, bg_content[16].y + _H*0.22, native.newFont("NanumSquareB.ttf"), 30, "center" )
+		bg_content[17]:setFillColor(0)
+
+		bg_content[18] = display.newText( "30000원", bg_content[16].x + _W*0.01, bg_content[16].y + _H*0.27, native.newFont("NanumSquareB.ttf"), 25, "center" )
+		bg_content[18]:setFillColor(0)
+
+
+		bg_content[19] = widget.newButton(
+		{
+			width = 127,
+			height = 105,
+			x = _W*0.93,
+			y = _H*0.22,
+			defaultFile = "image/button_back.png",
+			overFile = "image/button_backo.png",
+			onRelease = function() removeContent() createActivity(1) end
 		})
 
 	end
@@ -930,7 +978,8 @@ function scene:show( event )
 		-- Code here runs when the scene is entirely on screen
 		playBGM()
 		createStatusbar()
-		createActivity(13)
+		createActivity(10)
+		--createActivity(13)
 	end
 end
 
