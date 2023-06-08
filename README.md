@@ -33,11 +33,11 @@
 
 | Android Studio | java |
 | :--------: | :--------: |
-|   <img src="/.images/androidstudio.png" width="200" height="135"/>   |   <img src="/.images/java.png" width="200" height="100"/>    |
+|   <img src="https://raw.githubusercontent.com/ITJEONG-DEV/README/main/.images/androidstudio.png" width="200" height="135"/>   |   <img src="https://raw.githubusercontent.com/ITJEONG-DEV/README/main/.images/java.png" width="135" height="135"/>    |
 
 | CoronaSDK | lua |
 | :--------: | :--------: |
-|   <img src="/.images/coronasdk.png" width="200" height="150"/>   |   <img src="/.images/lua.png" width="200" height="200"/>    |
+|   <img src="https://raw.githubusercontent.com/ITJEONG-DEV/README/main/.images/coronasdk.png" width="180" height="150"/>   |   <img src="https://raw.githubusercontent.com/ITJEONG-DEV/README/main/.images/lua.png" width="150" height="150"/>    |
 
 
 ## 발전한 점
